@@ -1,83 +1,39 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, NativeModules } from 'react-native';
+import 'react-native-gesture-handler'
+import * as React from 'react';
+import { AppRegistry, Button, View, Text, SafeAreaView, TextInput } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { inject, observer } from 'mobx-react';
+import { Provider } from 'mobx-react';
 
-const { StatusBarManager } = NativeModules;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
+import { name as appName } from './app.json';
+import TodoStore from './MobXStore';
 
-const size = 25;
+const Stack = createStackNavigator();
+console.disableYellowBox = true;
 
-const marvellist = [
-  {
-    'Value': 'Iron Man',
-    'Color': 'red'
-  },
-  {
-    'Value': 'Hulk',
-    'Color': 'green'
-  },
-  {
-    'Value': 'Captain Ameria',
-    'Color': 'blue'
-  },
-  {
-    'Value': 'Thor',
-    'Color': 'gold'
-  },
-  {
-    'Value': 'Hawkeye',
-    'Color': 'purple'
-  },
-  {
-    'Value': 'Black Widow',
-    'Color': 'brown'
-  },
-  {
-    'Value': 'Loki',
-    'Color': 'green'
-  },
-  {
-    'Value': 'Scarlet Witch',
-    'Color': 'red'
-  },
-  {
-    'Value': 'Quick Silver',
-    'Color': 'blue'
-  },
-  {
-    'Value': 'Ultron',
-    'Color': 'grey'
-  },
-]
+class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-export default class RNScrollView extends React.PureComponent {
+  onChangeText = (value) => {
+
+  }
+
   render() {
+    const { navigation, value } = this.props
     return (
       <>
-        <SafeAreaView style={styles.safecontainer}>
-          <View style={styles.container}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              {marvellist.map((data, key) => {
-                return (
-                  <>
-                    <TouchableOpacity key={key} onPress={() => alert(data.Value)} >
-                      <View
-                        style={{
-                          ...styles.view,
-                          backgroundColor: data.Color,
-                          marginRight: key == marvellist.length - 1 ? 10 : 0,
-                        }}
-                      >
-                        <Text style={styles.text}>{data.Value}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                );
-              })}
-            </ScrollView>
-          </View>
+        <SafeAreaView style={{ padding: 10, paddingTop: 20 }}>
+
+          <TextInput
+            // onChangeText={text => onChangeText(text)}
+            // value={value}
+            style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 10 }}
+            placeholder={'Add Todo'}
+          />
+
         </SafeAreaView>
       </>
     );
@@ -85,24 +41,44 @@ export default class RNScrollView extends React.PureComponent {
 }
 
 
-const styles = StyleSheet.create({
-  safecontainer: {
-    flex: 1,
-  },
-  text: {
-    color: 'white',
-    fontSize: size + 10,
-    padding: 3,
-    paddingBottom: 0,
-    paddingTop: 0,
-  },
-  view: {
-    borderRadius: 25,
-    marginLeft: 10,
-    padding: size,
-  },
-  container: {
-    marginTop: STATUSBAR_HEIGHT * 8,
-    backgroundColor: 'white'
-  },
-});
+class DetailsScreen extends React.Component {
+  render() {
+    const { navigation } = this.props
+    return (
+      <>
+        <SafeAreaView>
+          <Text>Details Screen</Text>
+          <Button
+            title="Go to Details... again"
+            onPress={() => navigation.goBack(null)}
+          />
+        </SafeAreaView>
+      </>
+    );
+  }
+}
+
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+
+
+const Root = (
+  <>
+    {/* <Provider TodoStore={TodoStore}> */}
+    <App />
+    {/* </Provider> */}
+  </>
+);
+
+AppRegistry.registerComponent(appName, () => Root);
