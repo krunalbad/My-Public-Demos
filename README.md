@@ -1,17 +1,4 @@
-# React Native Card
+# RNNativeCarousel
+Have you ever considered creating independent carousel using native component rather than using 3rd party Carousel Package ?
 
-It is easy to create a card view using CSS in websites.
-
-
-But things get tricky in React Native.
-
-
-Without using any dependencies or any third party package.
-So here is a minimal example I have created from this below guide.
-
-
-[Visit Shadow Generator](https://ethercreative.github.io/react-native-shadow-generator/)
-
-
-![](shadow.jpeg)
-
+![](ezgif-6-bf1fa83d64a6.gif)
