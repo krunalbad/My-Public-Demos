@@ -1,0 +1,27 @@
+{
+  "name": "esb-helpers",
+  "version": "1.0.7",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:krunalbad/esb-helpers.git",
+    "directory": "esb-helpers"
+  },
+  "homepage": "http://krunalbadami.herokuapp.com/",
+  "keywords": [
+    "ecmascript",
+    "javascript",
+    "vanillajs",
+    "nodejs",
+    "logic"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@krunalbad"
+  },
+  "author": "Krunal Badami",
+  "license": "MIT"
+}
