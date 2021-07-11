@@ -1,0 +1,6 @@
+module Pods_YoutubeRnAnimation {
+  umbrella header "Pods-YoutubeRnAnimation-umbrella.h"
+
+  export *
+  module * { export * }
+}
