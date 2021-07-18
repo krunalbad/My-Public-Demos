@@ -1,4 +1,0 @@
-export const USER_LIST_REQUEST = 'USER_LIST_REQUEST';
-export const USER_LIST_SUCCESS = 'USER_LIST_SUCCESS';
-export const RESET_USER_LIST = 'RESET_USER_LIST';
-export const SET_USER_ID = 'SET_USER_ID';

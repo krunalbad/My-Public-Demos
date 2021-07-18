@@ -1,4 +1,3 @@
-## When you Start Project Please Follow this steps
+https://github.com/codedailyio/InstagramModalExample
 
-1. Please do `npm install`
-2. Please fire `npm run podInstall` from command line or Terminal
+![](insta.gif)
