@@ -1,0 +1,37 @@
+import { Platform } from 'react-native';
+
+const colors = {
+  inputBg: '#1d5196',
+  transparent: 'rgba(0,0,0,0)',
+  black: '#00000080',
+  white: '#FFFFFF',
+  dayFont: '#1d519626',
+  errorText: '#f27474',
+  bufferColor: '#8AC3E0',
+  navBarBg: '#0E0E0E',
+  darkButtonBg: '#304857',
+  lightButtonBg: '#627986',
+  darkModeInput: '#1E1E1E',
+  background: '#0C283A',
+  buttonColor: '#4785A4',
+  lightModeInput: '#FDFDFD',
+  darkContainer: '#1A1A1A',
+  controlBarLight: 'rgba(0,0,0,0.9)',
+  minTrackColor: 'rgba(255,255,255,1.0)',
+  placeholderText: '#FFFFFF4D',
+  alertButtonTextColor: '#4785A4',
+  nightFont: '#FFFFFF80',
+  osTransparent: Platform.OS === 'ios' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.8)',
+  pageBackground: '#000000',
+  alertBackground: '#222222', //rgb(34,34,34),
+  yellow: 'yellow',
+  validText: 'green',
+  controlBar: '#473E43',
+  grey: 'grey',
+  darkModeBackGround: '#0E0E0E',
+  darkModeText: '#eeeeee',
+  lightModeBackGround: '#E1E1E1',
+  lightModeText: '#000000',
+};
+
+export default colors;
