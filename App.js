@@ -1,205 +1,112 @@
-import React, { Component } from 'react';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+import React from 'react';
+import type {Node} from 'react';
 import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
-  Image,
-  Animated,
-  PanResponder,
-  Platform,
 } from 'react-native';
 
-import batmanPicture from './batman.jpg';
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
 
-const findHover = (layout, { pageX, pageY }) => {
-  const [selected] =
-    Object.entries(layout).find(([key, value]) => {
-      return (
-        value.pageX <= pageX &&
-        value.pageY <= pageY &&
-        value.pageX + value.width >= pageX &&
-        value.pageY + value.height >= pageY
-      );
-    }) || [];
-
-  return selected;
+const Section = ({children, title}): Node => {
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
+    </View>
+  );
 };
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
+const App: () => Node = () => {
+  const isDarkMode = useColorScheme() === 'dark';
 
-    this.state = {
-      selected: undefined,
-      visible: new Animated.Value(0),
-    };
-
-    this.layout = {};
-
-    this.likeRef = React.createRef();
-    this.shareRef = React.createRef();
-    this.commentRef = React.createRef();
-
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderGrant: (e, gestureState) => {
-        Animated.spring(this.state.visible, {
-          toValue: 1,
-          friction: 5,
-          useNativeDriver: Platform.OS === 'android',
-        }).start();
-      },
-      onPanResponderMove: (e, gestureState) => {
-        const { pageX, pageY } = e.nativeEvent;
-        const foundValue = findHover(this.layout, { pageX, pageY });
-
-        this.setState(state => {
-          if (state.selected === foundValue) {
-            return null;
-          }
-          return {
-            selected: foundValue,
-          };
-        });
-      },
-      onPanResponderRelease: (e, gestureState) => {
-        Animated.timing(this.state.visible, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: Platform.OS === 'android',
-        }).start(() => {
-          if (this.state.selected) {
-            alert(`You released on ${this.state.selected}!`);
-          }
-          this.setState({
-            selected: undefined,
-          });
-        });
-      },
-    });
-  }
-
-  handleMeasure = (key, ref) => () => {
-    ref.current.measure((x, y, width, height, pageX, pageY) => {
-      this.layout[key] = { x, y, width, height, pageX, pageY };
-    });
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  render() {
-    const modalStyle = {
-      opacity: this.state.visible,
-    };
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.main}>
-          <Image
-            source={batmanPicture}
-            resizeMode="contain"
-            style={styles.thumbnail}
-            {...this._panResponder.panHandlers}
-          />
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Section title="Step One">
+            Edit <Text style={styles.highlight}>App.js</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          <LearnMoreLinks />
         </View>
-        <Animated.View
-          style={[StyleSheet.absoluteFill, styles.modal, modalStyle]}
-          pointerEvents="none">
-          <View style={styles.modalContainer}>
-            <View style={styles.header}>
-              <Text>Krunal Badami</Text>
-            </View>
-            <Image source={batmanPicture} style={styles.image} resizeMode="cover" />
-            <View style={styles.header}>
-              <Text>Demo inspired by Jason Brown</Text>
-            </View>
-            <View style={styles.footer}>
-              <View style={styles.footerContent}>
-                <Text
-                  style={[
-                    styles.text,
-                    this.state.selected === 'like' && styles.bold,
-                  ]}
-                  ref={this.likeRef}
-                  onLayout={this.handleMeasure('like', this.likeRef)}>
-                  Like
-                </Text>
-                <Text
-                  style={[
-                    styles.text,
-                    this.state.selected === 'comment' && styles.bold,
-                  ]}
-                  ref={this.commentRef}
-                  onLayout={this.handleMeasure('comment', this.commentRef)}>
-                  Comment
-                </Text>
-                <Text
-                  style={[
-                    styles.text,
-                    this.state.selected === 'share' && styles.bold,
-                  ]}
-                  ref={this.shareRef}
-                  onLayout={this.handleMeasure('share', this.shareRef)}>
-                  Share
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Animated.View>
-      </View>
-    );
-  }
-}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,.5)',
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
   },
-  main: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
   },
-  thumbnail: {
-    width: 250,
-    height: 250,
-  },
-  modal: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContainer: {
-    width: '90%',
-    height: '60%',
-  },
-  header: {
-    backgroundColor: '#FFF',
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
-    overflow: 'hidden',
-    padding: 8,
-  },
-  footer: {
-    backgroundColor: '#FFF',
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    overflow: 'hidden',
-    padding: 8,
-  },
-  footerContent: {
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  text: {
-    flex: 1,
+  sectionDescription: {
+    marginTop: 8,
     fontSize: 18,
-    textAlign: 'center',
+    fontWeight: '400',
   },
-  bold: {
-    fontWeight: 'bold',
+  highlight: {
+    fontWeight: '700',
   },
 });
+
+export default App;
