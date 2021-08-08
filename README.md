@@ -1,3 +1,3 @@
-https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Snapchat
+https://github1s.com/wcandillon/can-it-be-done-in-react-native/blob/master/season2/spotify-header/App.tsx#L1-L49
 
 ![](snapchat.gif)
