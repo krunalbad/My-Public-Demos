@@ -1,5 +1,3 @@
-https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/LiquidSwipe
+A high performance list view with auto play video functionality
 
-
-
-<video src='demo.mov' width=180 loop autoplay />
+![](video.gif)
